@@ -28,30 +28,13 @@ void* consumer(void* args){
 
     while(1){
 
-        // Wait if buffer empty
-
         sem_wait(&full);
-
-        // Lock buffer
-
         sem_wait(&mutex);
-
-        // Consume item
-
         int item = buffer[out];
-
         out = (out + 1) % SIZE;
-
         printf("Consumed %d\n", item);
-
-        // Unlock buffer
-
         sem_post(&mutex);
-
-        // One more empty slot
-
         sem_post(&empty);
-
         sleep(2);
     }
 }
